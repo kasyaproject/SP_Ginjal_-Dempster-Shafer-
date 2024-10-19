@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use Carbon\Carbon;
 use App\Models\gejala;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
 class InputGejala extends Seeder
@@ -47,16 +48,18 @@ class InputGejala extends Seeder
             ['nama' => 'Riwayat gagal ginjal akut', 'kategori' => 'Riwayat Medis', 'min' => '0', 'max' => '0', 'bobot' => '0.7']
         ];
 
-        foreach ($data as $value) {
-            gejala::insert([
-                'nama' => $value['nama'],
-                'kategori' => $value['kategori'],
-                'min' => $value['min'],
-                'max' => $value['max'],
-                'bobot' => $value['bobot'],
-                'created_at' => Carbon::now(),
-                'updated_at' => Carbon::now(),
-            ]);
-        }
+        DB::table('gejalas')->insert($data);
+
+        // foreach ($data as $value) {
+        //     gejala::insert([
+        //         'nama' => $value['nama'],
+        //         'kategori' => $value['kategori'],
+        //         'min' => $value['min'],
+        //         'max' => $value['max'],
+        //         'bobot' => $value['bobot'],
+        //         'created_at' => Carbon::now(),
+        //         'updated_at' => Carbon::now(),
+        //     ]);
+        // }
     }
 }

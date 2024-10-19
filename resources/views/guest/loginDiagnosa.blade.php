@@ -9,7 +9,7 @@
                     <p class="mb-8 text-lg font-light text-center text-white px-14">
                         Daftarkan diri anda untuk memulai diagnosa
                     </p>
-                    <a href="{{ route('registPasien.index') }}">
+                    <a href="{{ route('registPasien.loginDiagnoisa') }}">
                         <button
                             class="px-20 py-2 font-semibold text-white transition delay-75 border-2 border-white rounded-full hover:text-primary hover:bg-white">
                             Register

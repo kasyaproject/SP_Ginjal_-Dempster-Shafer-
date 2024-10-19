@@ -1,8 +1,6 @@
 <x-app-layout>
     @section('sidebar#solusi', 'border-b-2 border-gray-200')
 
-
-
     <div class="px-2 py-8 lg:px-8 laptop:py-12">
         <div class="relative w-full p-4 overflow-x-auto bg-white rounded-lg shadow-md">
             <div class="grid items-center justify-between px-8 mb-8 lg:flex">
@@ -102,6 +100,9 @@
     </div>
 
     <!-- MODAL TAMBAH DATA -->
+    <!-- Overlay -->
+    <div id="modal-overlay" class="fixed inset-0 bg-gray-900/80 z-40 hidden"></div>
+
     <div id="static-modal" data-modal-backdrop="static" tabindex="-1" aria-hidden="true"
         class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
         <div class="relative w-full max-w-3xl max-h-full p-4">
@@ -112,7 +113,7 @@
                     <h3 class="text-xl font-semibold text-gray-900">
                         Tambah Solusi Penyakit Baru
                     </h3>
-                    <button type="button"
+                    <button type="button" id="button-close"
                         class="inline-flex items-center justify-center w-8 h-8 text-sm text-gray-400 bg-transparent rounded-lg hover:bg-gray-200"
                         data-modal-hide="static-modal">
                         <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
@@ -129,12 +130,13 @@
                     <div class="mb-5">
                         <label for="nama" class="block mb-2 text-sm font-medium text-gray-900">Nama Solusi
                             Penyakit</label>
-                        <input type="text" id="nama" name="nama"
+                        <input type="text" id="nama" name="nama" value="{{ old('nama') }}"
                             class="bg-gray-50 border border-gray-300 focus:ring-2 text-gray-900 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full p-2.5 "
-                            placeholder="Masukan nama solusi penyakit . . . " required />
+                            placeholder="Masukan nama solusi penyakit . . . " />
+
                         @error('nama')
                             <p id="filled_error_help" class="mt-1 text-xs text-red-600">
-                                Masukan nama solusi penyakit !
+                                {{ $message }}
                             </p>
                         @enderror
                     </div>
@@ -145,10 +147,11 @@
                         </label>
                         <textarea id="deskripsi" rows="4" name="deskripsi"
                             class="block p-2.5 w-full text-sm text-gray-900 min-h-80 bg-gray-50 rounded-lg border border-gray-300 focus:ring-green-500 focus:border-green-500"
-                            placeholder="Tulis deskripsi penyakit . . ." required></textarea>
+                            placeholder="Tulis deskripsi penyakit . . .">{{ old('deskripsi') }}</textarea>
+
                         @error('deskripsi')
                             <p id="filled_error_help" class="mt-1 text-xs text-red-600 ">
-                                Masukan deskripsi solusi penyakit !
+                                {{ $message }}
                             </p>
                         @enderror
                     </div>
@@ -176,6 +179,12 @@
                                 </option>
                             @endforeach
                         </select>
+
+                        @error('penyakit')
+                            <p id="filled_error_help" class="mt-1 text-xs text-red-600 ">
+                                {{ $message }}
+                            </p>
+                        @enderror
                     </div>
 
                     <button type="submit" data-modal-target="static-modal" data-modal-toggle="static-modal"
@@ -313,6 +322,24 @@
     @endforeach
 
     <script>
+        // MENAMPILKAN MODAL TAMBAH JIKA ADA ERROR INPUT
+        document.addEventListener('DOMContentLoaded', function() {
+            // Mengecek jika ada error
+            var modal = new Modal(document.getElementById('static-modal'));
+            var overlay = document.getElementById('modal-overlay');
+
+            @if ($errors->any())
+                modal.show(); // Tampilkan modal
+                overlay.classList.remove('hidden'); // Tampilkan overlay
+            @endif
+
+            // Menyembunyikan modal dan overlay saat ditutup
+            document.getElementById('button-close').addEventListener('click', function() {
+                modal.hide(); // Sembunyikan modal
+                overlay.classList.add('hidden'); // Sembunyikan overlay
+            });
+        });
+
         // Data Table Flowbite untuk table gejala & riwayat
         if (document.getElementById("table_solusi") && typeof simpleDatatables.DataTable !== 'undefined') {
             const dataTable = new simpleDatatables.DataTable("#table_solusi", {

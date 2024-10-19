@@ -59,8 +59,8 @@
                         @enderror
 
                         @if (session('error'))
-                            <p id="filled_error_help" class="mt-4 text-xs text-red-600 dark:text-green-400">Username dan
-                                Password salah !</p>
+                            <p id="filled_error_help" class="mt-4 text-xs text-red-600 dark:text-green-400">
+                                {{ session('error') }}</p>
                         @endif
                         @if (session('error-admin'))
                             <p id="filled_error_help" class="mt-4 text-xs text-red-600 dark:text-green-400">

@@ -1,4 +1,5 @@
 <x-app-layout>
+
     <div class="alert-massage">
         {{-- MASSAGE SUCCES --}}
         @if (session('success'))
@@ -57,7 +58,7 @@
                             <label for="default-input" class="block px-2 mb-2 text-sm font-medium text-gray-900">
                                 Nama Pengguna
                             </label>
-                            <input type="text" id="name" name="name"
+                            <input type="text" id="name" name="name" required
                                 class="bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full p-2.5"
                                 value="{{ $profil->name }}" disabled>
                             @error('name')
@@ -70,7 +71,7 @@
                             <label for="default-input" class="block px-2 mb-2 text-sm font-medium text-gray-900">
                                 Username Pengguna
                             </label>
-                            <input type="text" id="username" name="username"
+                            <input type="text" id="username" name="username" required
                                 class="bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full p-2.5"
                                 value="{{ $profil->username }}" disabled>
                             @error('username')
@@ -83,7 +84,7 @@
                             <label for="default-input" class="block px-2 mb-2 text-sm font-medium text-gray-900">
                                 Email Pengguna
                             </label>
-                            <input type="text" id="email" name="email"
+                            <input type="text" id="email" name="email" required
                                 class="bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full p-2.5"
                                 value="{{ $profil->email }}" disabled>
                             @error('email')
@@ -98,6 +99,7 @@
                             style="background-color: rgb(53, 162, 159)">
                             Edit
                         </button>
+
                         <div id="submit" class="hidden grid-cols-2 gap-2">
                             <button
                                 class="w-full p-1 text-sm text-white border-2 rounded-md border-primary bg-primary hover:bg-primary"
@@ -189,6 +191,11 @@
             InputEmail.classList.add('bg-gray-100');
 
             editButton.classList.remove('hidden');
+
+            // Reset value pada field
+            InputName.value = '{{ $profil->name }}';
+            InputUsername.value = '{{ $profil->username }}';
+            InputEmail.value = '{{ $profil->email }}';
         });
 
         // Fungsi untuk menambahkan kelas hidden setelah 2 detik

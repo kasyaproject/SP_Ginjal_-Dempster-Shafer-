@@ -315,16 +315,16 @@ class GuestController extends Controller
         // Ambil data solusi berdasarkan ID solusi
         $solusi = solusi::whereIn('id', $solusiIds)->get();
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        dd($request->all(), [
-            'bobotTerbesar' => $bobotTerbesar,
-            'kondisi' => $kondisi,
-            'results' => $results,
-            'detailResults' => $detailResults,
-            'penyakitArray' => $penyakitArray,
-            'allGelajas' => $allGelajas,
-            'allBobots' => $allBobots,
-            'solusi' => $solusi,
-        ]);
+        // dd($request->all(), [
+        //     'bobotTerbesar' => $bobotTerbesar,
+        //     'kondisi' => $kondisi,
+        //     'results' => $results,
+        //     'detailResults' => $detailResults,
+        //     'penyakitArray' => $penyakitArray,
+        //     'allGelajas' => $allGelajas,
+        //     'allBobots' => $allBobots,
+        //     'solusi' => $solusi,
+        // ]);
 
         $artikel = Artikel::inRandomOrder()
             ->limit(4)

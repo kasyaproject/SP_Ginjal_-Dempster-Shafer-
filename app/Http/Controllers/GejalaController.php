@@ -53,11 +53,18 @@ class GejalaController extends Controller
         $validator = Validator::make($request->all(), [
             'nama' => 'required|unique:gejalas',
             'kategori' => 'required',
-            'min' => 'required',
-            'max' => 'required',
+            'min' => 'required|numeric',
+            'max' => 'required|numeric',
             'bobot' => 'required|numeric|between:0,1',
             'penyakit' => 'required|array',
             'penyakit.*' => 'exists:penyakits,id',
+        ], [
+            'nama.required' => 'Nama gejala penyakit harus diisi.',
+            'kategori.required' => 'Pilih kategori penyakit.',
+            'min.required' => 'Nilai min gejala penyakit harus diisi.',
+            'max.required' => 'NIlai max gejala penyakit harus diisi.',
+            'bobot.required' => 'Nilai bobot gejala penyakit harus diisi.',
+            'penyakit.required' => 'Pilih minimal satu kategori penyakit.',
         ]);
 
         if ($validator->fails()) {

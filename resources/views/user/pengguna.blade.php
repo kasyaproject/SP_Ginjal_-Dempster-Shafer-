@@ -116,6 +116,9 @@
 
 
     <!-- MODAL TAMBAH DATA -->
+    <!-- Overlay -->
+    <div id="modal-overlay" class="fixed inset-0 bg-gray-900/80 z-40 hidden"></div>
+
     <div id="static-modal" data-modal-backdrop="static" tabindex="-1" aria-hidden="true"
         class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
         <div class="relative w-full max-w-3xl max-h-full p-4">
@@ -126,7 +129,7 @@
                     <h3 class="text-xl font-semibold text-gray-900">
                         Tambah Pengguna Baru
                     </h3>
-                    <button type="button"
+                    <button type="button" id="button-close"
                         class="inline-flex items-center justify-center w-8 h-8 text-sm text-gray-400 bg-transparent rounded-lg hover:bg-gray-200"
                         data-modal-hide="static-modal">
                         <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
@@ -145,10 +148,10 @@
                         <label for="name" class="block mb-2 text-sm font-medium text-gray-900">Nama Pengguna</label>
                         <input type="text" id="name" name="name" value="{{ old('name') }}"
                             class="bg-gray-50 border border-gray-300 focus:ring-2 text-gray-900 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full p-2.5 "
-                            placeholder="Masukan nama pengguna . . . " required />
+                            placeholder="Masukan nama pengguna . . . " />
                         @error('name')
                             <p id="filled_error_help" class="mt-1 text-xs text-red-600">
-                                Masukan nama pengguna !
+                                {{ $message }}
                             </p>
                         @enderror
                     </div>
@@ -158,10 +161,10 @@
                         </label>
                         <input type="text" id="username" name="username" value="{{ old('username') }}"
                             class="bg-gray-50 border border-gray-300 focus:ring-2 text-gray-900 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full p-2.5 "
-                            placeholder="Masukan username pengguna . . . " required />
+                            placeholder="Masukan username pengguna . . . " />
                         @error('username')
                             <p id="filled_error_help" class="mt-1 text-xs text-red-600">
-                                Masukan username pengguna !
+                                {{ $message }}
                             </p>
                         @enderror
                     </div>
@@ -171,10 +174,10 @@
                         </label>
                         <input type="email" id="email" name="email" value="{{ old('email') }}"
                             class="bg-gray-50 border border-gray-300 focus:ring-2 text-gray-900 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full p-2.5 "
-                            placeholder="Masukan email pengguna . . . " required />
+                            placeholder="Masukan email pengguna . . . " />
                         @error('email')
                             <p id="filled_error_help" class="mt-1 text-xs text-red-600">
-                                Masukan email pengguna !
+                                {{ $message }}
                             </p>
                         @enderror
                     </div>
@@ -186,10 +189,10 @@
                             </label>
                             <input type="password" id="password" name="password" value="{{ old('password') }}"
                                 class="bg-gray-50 border border-gray-300 focus:ring-2 text-gray-900 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full p-2.5 "
-                                placeholder="Masukan password pengguna . . . " required />
+                                placeholder="Masukan password pengguna . . . " />
                             @error('password')
                                 <p id="filled_error_help" class="mt-1 text-xs text-red-600">
-                                    Masukan password pengguna !
+                                    {{ $message }}
                                 </p>
                             @enderror
                         </div>
@@ -199,10 +202,10 @@
                             </label>
                             <input type="password" id="confirm_password" name="confirm_password"
                                 class="bg-gray-50 border border-gray-300 focus:ring-2 text-gray-900 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full p-2.5 "
-                                placeholder="Confirm password pengguna . . . " required />
+                                placeholder="Confirm password pengguna . . . " />
                             @error('confirm_password')
                                 <p id="filled_error_help" class="mt-1 text-xs text-red-600">
-                                    Confirm Password pengguna tidak sesuai !
+                                    {{ $message }}
                                 </p>
                             @enderror
                         </div>
@@ -370,6 +373,24 @@
     @endforeach
 
     <script>
+        // MENAMPILKAN MODAL TAMBAH JIKA ADA ERROR INPUT
+        document.addEventListener('DOMContentLoaded', function() {
+            // Mengecek jika ada error
+            var modal = new Modal(document.getElementById('static-modal'));
+            var overlay = document.getElementById('modal-overlay');
+
+            @if ($errors->any())
+                modal.show(); // Tampilkan modal
+                overlay.classList.remove('hidden'); // Tampilkan overlay
+            @endif
+
+            // Menyembunyikan modal dan overlay saat ditutup
+            document.getElementById('button-close').addEventListener('click', function() {
+                modal.hide(); // Sembunyikan modal
+                overlay.classList.add('hidden'); // Sembunyikan overlay
+            });
+        });
+
         // Data Table Flowbite untuk table gejala & riwayat
         if (document.getElementById("table_pengguna") && typeof simpleDatatables.DataTable !== 'undefined') {
             const dataTable = new simpleDatatables.DataTable("#table_pengguna", {

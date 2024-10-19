@@ -45,6 +45,11 @@ class PenyakitController extends Controller
             'gejala.*' => 'exists:gejalas,id',
             'solusi' => 'required|array',
             'solusi.*' => 'exists:solusis,id',
+        ], [
+            'nama.required' => 'Nama penyakit harus diisi.',
+            'deskripsi.required' => 'Deskripsi penyakit harus diisi.',
+            'gejala.required' => 'Pilih minimal satu kategori penyakit.',
+            'solusi.required' => 'Pilih minimal satu solusi penyakit.',
         ]);
 
         if ($validator->fails()) {

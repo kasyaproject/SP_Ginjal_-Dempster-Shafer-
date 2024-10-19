@@ -43,6 +43,9 @@ class ArtikelController extends Controller
             'isi' => 'required',
             'author' => 'required',
             'id_penyakit' => 'required',
+        ], [
+            'judul.required' => 'Judul artikel penyakit harus diisi.',
+            'isi.required' => 'Isi content artikel penyakit harus diisi.',
         ]);
 
         if ($validator->fails()) {

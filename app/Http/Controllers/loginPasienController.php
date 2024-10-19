@@ -16,8 +16,13 @@ class loginPasienController extends Controller
     public function index()
     {
         //
-
         return view('guest.login');
+    }
+
+    public function formloginDiagnosa()
+    {
+        //
+        return view('guest.loginDiagnosa');
     }
 
     // Proses login
@@ -32,7 +37,31 @@ class loginPasienController extends Controller
 
         // Cek jika validasi gagal
         if ($validator->fails()) {
-            return redirect()->back()->withInput();
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
+
+        // Coba login dengan kredensial
+        $credentials = $request->only('username', 'password');
+        if (Auth::attempt($credentials)) {
+            $request->session()->regenerate();
+            return redirect('/');
+        } else {
+            return back()->with('error', 'Username atau password salah.')->withInput();
+        }
+    }
+
+    public function loginDiagnoisa(Request $request)
+    {
+        // dd($request->all());
+        // Validasi input
+        $validator = Validator::make($request->all(), [
+            'username' => 'required',
+            'password' => 'required',
+        ]);
+
+        // Cek jika validasi gagal
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
         }
 
         // Coba login dengan kredensial
@@ -41,9 +70,7 @@ class loginPasienController extends Controller
             $request->session()->regenerate();
             return redirect('/form');
         } else {
-            return back()->withErrors([
-                'username' => 'Username atau password salah.',
-            ])->withInput();  // Tambahkan withInput() di sini
+            return back()->with('error', 'Username atau password salah.')->withInput();
         }
     }
 

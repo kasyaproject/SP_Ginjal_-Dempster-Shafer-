@@ -41,7 +41,12 @@ class PenggunaController extends Controller
             'email' => 'required|email|unique:users',
             'password' => 'required|min:6',
             'confirm_password' => 'required|same:password',
-            'tittle' => 'required',
+        ], [
+            'name.required' => 'Nama gejala penyakit harus diisi.', // Pesan error untuk 'name'
+            'username.required' => 'Username harus diisi.',
+            'email.required' => 'Email harus diisi.',
+            'password.required' => 'Password harus diisi.',
+            'confirm_password.required' => 'Konfirmasi password harus diisi.',
         ]);
 
         if ($validator->fails()) {

@@ -43,30 +43,6 @@
                 @endif
             </div>
 
-            {{-- <!-- Menampilkan bobot per penyakit dari array $allBobots -->
-            @foreach ($allGelajas as $penyakit => $data)
-                <h3>{{ $penyakit }}</h3>
-                <ul>
-                    @foreach ($data['nama'] as $bobot)
-                        <li class="ml-4">gejala: {{ $bobot }}</li>
-                    @endforeach
-                </ul>
-            @endforeach
-            
-            <!-- Menampilkan bobot per penyakit dari array $allBobots -->
-            @foreach ($allBobots as $penyakit => $data)
-                <h3>{{ $penyakit }}</h3>
-                <ul>
-                    @foreach ($data['bobot'] as $bobot)
-                        <li class="ml-4">Bobot: {{ $bobot }}</li>
-                    @endforeach
-                </ul>
-            @endforeach
-
-            @foreach ($results as $penyakit => $nilai)
-                <p>{{ $penyakit }}: {{ $nilai }}</p>
-            @endforeach --}}
-
             <div class="px-2 py-6 lg:p-8">
                 <div class="mb-5">
                     <p class="mb-4 text-xl font-semibold">Laporan Hasil Diagnosa Penyakit Ginjal</p>
